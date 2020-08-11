@@ -34,3 +34,23 @@ There will be two pipelines. I'm resisting the temptation to do this as a single
 The TDD library of choice is pytest. This is a batch processing pipeline that will be pushed into GCP Dataflow therefore a release pipeline isn't necessary until automation is valuable.
 
 Remember: Avoid including libraries/modules that add complexity to the pipeline deployment!
+
+#### Data Fields (Source File)
+
+* tx_uid
+* price
+* tx_date
+* postcode
+* property_type
+* age_classification
+* tenure_duration
+* paon
+* saon
+* street
+* locality
+* town_city
+* district
+* county
+* ppd_category_type
+
+15 fields
