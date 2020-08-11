@@ -32,3 +32,5 @@ The pipelines should handle transformation issues and park them somewhere for fu
 There will be two pipelines. I'm resisting the temptation to do this as a single end to end effort. Breaking it up reduces the complexity in each pipeline and it allows for an interim step that means replaying the following stages becomes easier.
 
 The TDD library of choice is pytest. This is a batch processing pipeline that will be pushed into GCP Dataflow therefore a release pipeline isn't necessary until automation is valuable.
+
+Remember: Avoid including libraries/modules that add complexity to the pipeline deployment!
