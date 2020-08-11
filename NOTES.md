@@ -66,3 +66,5 @@ Record Status - monthly file only	Indicates additions, changes and deletions to 
 A = Addition
 C = Change
 D = Delete.
+
+Apache Beam. Installed via requirements file and pip

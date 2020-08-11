@@ -54,3 +54,10 @@ Remember: Avoid including libraries/modules that add complexity to the pipeline 
 * ppd_category_type
 
 15 fields
+
+#### Development Environment Configuration
+
+I'm going to use a conda environment to isolate the python executable and installed modules
+
+This was set up using pycharm.
+
