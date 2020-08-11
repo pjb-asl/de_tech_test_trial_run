@@ -69,4 +69,6 @@ D = Delete.
 
 Apache Beam. Installed via requirements file and pip
 
-I'm back on the task. I've just looked at the sample file and there is an extra field which is confusing!
+I'm back on the task. I've just looked at the sample file and there is an extra field which is confusing! 
+
+Found the issue. I'd missed a fields! Doh!

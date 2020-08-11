@@ -52,8 +52,9 @@ Remember: Avoid including libraries/modules that add complexity to the pipeline 
 * district
 * county
 * ppd_category_type
+* change_type
 
-15 fields
+16 fields
 
 #### Development Environment Configuration
 
