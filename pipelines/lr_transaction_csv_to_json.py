@@ -23,8 +23,11 @@ class CsvToJsonDoFn(beam.DoFn):
     def process(self, element):
         reader = csv.reader([element], quotechar='"', delimiter=',', quoting=csv.QUOTE_ALL, skipinitialspace=True)
         for row in reader:
-            return [json.dumps(dict(zip(self.fields, row)))]
-        return None
+            if len(self.fields) == len(row):
+                yield beam.pvalue.TaggedOutput('success', json.dumps(dict(zip(self.fields, row))))
+            else:
+                # ToDo: Turn into something that triggers the failure to be output somewhere so it can be investigated
+                yield beam.pvalue.TaggedOutput('errors', json.dumps(row))
 
 
 def run(argv=None, save_main_session=True):
@@ -40,6 +43,11 @@ def run(argv=None, save_main_session=True):
         dest='output',
         required=True,
         help='Output file to write results to.')
+    parser.add_argument(
+        '--errors',
+        dest='errors',
+        required=True,
+        help='Output file to write error rows to.')
     known_args, pipeline_args = parser.parse_known_args(argv)
 
     # We use the save_main_session option because one or more DoFn's in this
@@ -49,8 +57,9 @@ def run(argv=None, save_main_session=True):
 
     with beam.Pipeline(options=pipeline_options) as p:
         csv_records = p | "Read source file" >> ReadFromText(known_args.input)
-        json_record = csv_records | "Transform" >> (beam.ParDo(CsvToJsonDoFn()))
-        json_record | "Save to file" >> WriteToText(known_args.output)
+        json_record = csv_records | "Transform" >> (beam.ParDo(CsvToJsonDoFn()).with_outputs('errors', 'success'))
+        json_record.success | "Save to file" >> WriteToText(known_args.output)
+        json_record.errors | "Save to errors file" >> WriteToText(known_args.errors)
 
 
 if __name__ == '__main__':
