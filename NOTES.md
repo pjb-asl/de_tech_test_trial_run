@@ -72,3 +72,5 @@ Apache Beam. Installed via requirements file and pip
 I'm back on the task. I've just looked at the sample file and there is an extra field which is confusing! 
 
 Found the issue. I'd missed a fields! Doh!
+
+The initial pipeline is working but I don't have any test coverage or file content validation
