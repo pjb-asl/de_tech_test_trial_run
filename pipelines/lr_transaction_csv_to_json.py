@@ -23,6 +23,7 @@ class CsvToJsonDoFn(beam.DoFn):
     def process(self, element):
         reader = csv.reader([element], quotechar='"', delimiter=',', quoting=csv.QUOTE_ALL, skipinitialspace=True)
         for row in reader:
+            # ToDo: This needs a try catch so the pipeline never stops!
             if len(self.fields) == len(row):
                 yield beam.pvalue.TaggedOutput('success', json.dumps(dict(zip(self.fields, row))))
             else:

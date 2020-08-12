@@ -74,3 +74,5 @@ I'm back on the task. I've just looked at the sample file and there is an extra 
 Found the issue. I'd missed a fields! Doh!
 
 The initial pipeline is working but I don't have any test coverage or file content validation
+
+I have taken a guess that a key combining SAON, PAON and Postcode will combine to give us a unique identifier
