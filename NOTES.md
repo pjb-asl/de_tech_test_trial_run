@@ -76,3 +76,6 @@ Found the issue. I'd missed a fields! Doh!
 The initial pipeline is working but I don't have any test coverage or file content validation
 
 I have taken a guess that a key combining SAON, PAON and Postcode will combine to give us a unique identifier
+
+Next steps would be to run this on GCP Dataflow in order to test it's scalability
+

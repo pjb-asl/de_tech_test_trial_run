@@ -37,7 +37,7 @@ def run(argv=None, save_main_session=True):
     parser.add_argument(
         '--input',
         dest='input',
-        default='gs://dataflow-samples/shakespeare/kinglear.txt',
+        required=True,
         help='Input file to process.')
     parser.add_argument(
         '--output',
