@@ -41,6 +41,18 @@ class GeneratePropertyKeyDoFn(beam.DoFn):
             yield beam.pvalue.TaggedOutput('error', json.dumps(record))
 
 
+class MaterializeResultsDoFn(beam.DoFn):
+    """
+    This class transforms the grouped iterable references into actual results to save
+    """
+    def process(self, element):
+        return_list = []
+        for item in element[1]:
+            return_list.append(item)
+        return_value = {'key': element[0], 'transactions': return_list}
+        yield json.dumps(return_value)
+
+
 def run(argv=None, save_main_session=True):
     """Main entry point; defines and runs the wordcount pipeline."""
     parser = argparse.ArgumentParser()
@@ -67,7 +79,8 @@ def run(argv=None, save_main_session=True):
         json_records = p | "Read source file" >> ReadFromText(known_args.input)
         keyed_json_records = json_records | "Add property keys" >> (beam.ParDo(GeneratePropertyKeyDoFn()).with_outputs('errors', 'success'))
         grouped_json_records = keyed_json_records.success | "Group by property key" >> beam.GroupByKey()
-        grouped_json_records | "Save output to file" >> WriteToText(known_args.output)
+        prepared_output_records = grouped_json_records | "Materialise Results" >> (beam.ParDo(MaterializeResultsDoFn()))
+        prepared_output_records | "Save output to file" >> WriteToText(known_args.output)
 
 
 if __name__ == '__main__':
